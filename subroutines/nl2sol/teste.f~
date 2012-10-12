@@ -1,0 +1,20 @@
+program main
+
+    use interfaces
+    implicit none
+    
+    integer, parameter :: meqn = 3
+    integer, parameter :: nvar = 2
+    real, dimension(nvar) :: x
+    
+    external resid
+  
+    call timestamp()
+    
+    x = [3.0E+00, 1.0E+00]
+        
+    call minimize(meqn, nvar, x, resid )
+    
+    call timestamp()
+    
+end
