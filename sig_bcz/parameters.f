@@ -67,7 +67,7 @@
 		!write (6,*) ' '
 		write (6,*) " Reading the parameters from file: ", filename
 		! open the file -
-		open(unit=unit1, file="sig_bcz_input", &
+		open(unit=unit1, file="/home/joao/Documents/FCUP/TESE/bcz_fit/sig_bcz_input", &
                       action='read', delim='quote', &
                       iostat=ierr)
      	! read input -
@@ -76,8 +76,16 @@
           	if (ierr /= 0) write(*,*) " --> failed in ", trim(filename), &
                       " with error code ", ierr
 
-		write(6,'( a,/ )') "  Input parameters are:"
-		write(6,nml=sig_bcz_controls)
+		if( iprintd .ne. 0 ) then
+			write (6,'( a,/ )') "  Input parameters are:"
+			write (6, 6001) xinitd, xamp0d, tau0refd, phi0refd, iprintd, include_errorsd
+ 6001		format(4x, "XINIT = ", es10.4, /, &
+                      4x, "AMP0 = ", f5.3, 4x, "TAU0 = ", f9.2, 4x, "PHI0 = ", f5.3, /, &
+                      4x, "IPRINT = ", i1, 4x, "ERRORS = ", a1, / )
+		end if
+		
+!		write(6,'( a,/ )') "  Input parameters are:"
+!		write(6,nml=sig_bcz_controls)
 		
 
 		pi  = 4.0d0*atan(1.0d0)
@@ -105,7 +113,7 @@
 		xl0 = xl0d
 			xl02=xl0*(xl0+1.0d0)
 			
-		xamp0ref = xamp0d
+		xamp0 = xamp0d
 		tau0ref = tau0refd
 		phi0ref = phi0refd
 		

@@ -1,33 +1,24 @@
-!module functions
-	
-!	implicit none
-	
-!	contains
-!--------------------------------------------------------------------
-	double precision function fun (c, w, l)
-!	 this is the function to be fitted. It is the signal produced
-!	 by the sharp transition in the base of the convection zone
+!**********************************************************
+  double precision function fun (c, w, l)
+!	 this is the function to be fitted. It is the signal
+!	 produced by the sharp transition in the base of the
+!	 convection zone
 !
 !	 see Monteiro et al. (1994), eq (20)
 
-		implicit double precision (b-h,o-z)
-		implicit integer (i-n)
-		!implicit none
+		implicit none
 	
-		!real, dimension(20), intent(in)  :: c
-		!real, intent(in)                 :: w
-		!integer, intent(in)              :: l
-		
-		parameter (ncp=20)
-		dimension c(ncp)
+		double precision, intent(in)  :: c(*)
+		double precision, intent(in)  :: w
+		integer, intent(in)           :: l
 
-		!real :: xarg
+		double precision :: xarg
+
 		
 		xarg = 2.0d0 * ( c(1)*w + c(2) )
 	  	fun  = ( c(3)/w**2 ) * sin(xarg)
 
 		return
 		
-	end function fun
+  end function fun
 
-!end module functions

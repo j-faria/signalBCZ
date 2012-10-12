@@ -1,5 +1,5 @@
 !****************************************************************************
-	subroutine poly_smooth (lval,xw,yw,n,xlamb)
+  subroutine poly_smooth (lval,xw,yw,n,xlamb)
 ! Here, a polynomial fit of degree (N-1), to the N points (XW,YW) is done.
 ! A normalization of both XW and YW to the interval [0,1] is used to reduce
 ! numerical errors.
@@ -7,96 +7,96 @@
 ! is associated to the third derivative. The smoothed fit to the N points
 ! is returned in YW.
 !
-		implicit double precision (b-h,o-z)
-		implicit integer (i-n)
-		parameter (loc=100,exlim=-200.0d0)
-		dimension xw(lval),yw(lval)
-		dimension y(loc),d(loc,loc),c(loc)
+    implicit double precision (b-h,o-z)
+    implicit integer (i-n)
+    parameter (loc=100,exlim=-200.0d0)
+    dimension xw(lval),yw(lval)
+    dimension y(loc),d(loc,loc),c(loc)
 
-		! This assumes that xw and yw are ordered in the correct way!!!
-		! Normalization:
-		xmax=xw(n)
-		xmin=xw(1)
-		ymax=yw(n)
-		ymin=yw(1)
-		xa=2.0d0/(xmax-xmin)
-		xb=-(xmax+xmin)/(xmax-xmin)
-		ya=2.0d0/(ymax-ymin)
-		yb=-(ymax+ymin)/(ymax-ymin)
+    ! This assumes that xw and yw are ordered in the correct way!!!
+    ! Normalization:
+    xmax=xw(n)
+    xmin=xw(1)
+    ymax=yw(n)
+    ymin=yw(1)
+    xa=2.0d0/(xmax-xmin)
+    xb=-(xmax+xmin)/(xmax-xmin)
+    ya=2.0d0/(ymax-ymin)
+    yb=-(ymax+ymin)/(ymax-ymin)
+
+    do j=1,n
+       xw(j)=xa*xw(j)+xb
+       yw(j)=ya*yw(j)+yb
+    enddo
+
+
+    do j=1,n
+	    xj=dfloat(j)
+	    do k=j,n
+		    fac=0.0d0
+		    xk=dble(k)
+		    fac1=0.0d0
+		    fac2=0.0d0
+		    do i=1,n
+			    if (xw(i).eq.0.0d0) then
+				    faci1=0.0d0
+				    faci2=0.0d0
+				    if (k+j.eq.2) faci1=1.0d0
+				    if (k+j.eq.8) faci2=1.0d0
+				    goto 240
+    !                else
+    !                   xx=abs(xw(i))
+    !		    elwx1=dble(k+j-2)*log(xx)
+    !		    elwx2=dble(k+j-8)*log(xx)
+			    endif
+    !		 if (elwx1.lt.exlim) then
+    !                   faci1=0.0d0
+    !		 else
+			    faci1=xw(i)**(k+j-2)
+    !		 endif
+    !		 if (((j+k).lt.8).or.(elwx2.lt.exlim)) then
+    !	            faci2=0.0d0
+    !		 else
+			    faci2=xw(i)**(k+j-8)
+    !                endif
+    240				fac1=fac1+faci1
+			    fac2=fac2+faci2
+		    enddo
+
+		    fac = fac2*xlamb*(xk-1.0d0)*(xk-2.0d0)*(xk-3.0d0)
+		    fac = fac * (xj-1.0d0)*(xj-2.0d0)*(xj-3.0d0)
+
+		    fac = fac + fac1
+		    d(k,j)=fac
+		    d(j,k)=fac
+	    enddo
+
+	    y(j)=0.0d0
+
+	    do i=1,n
+		    if (j.eq.1) then
+			    sum=yw(i)
+		    else
+	     		sum=yw(i)*xw(i)**(j-1)
+		    endif
+		    y(j)=y(j)+sum
 		
-		do j=1,n
-		   xw(j)=xa*xw(j)+xb
-		   yw(j)=ya*yw(j)+yb
-		enddo
+	    enddo
+    enddo
 
 
-		do j=1,n
-			xj=dfloat(j)
-			do k=j,n
-				fac=0.0d0
-				xk=dble(k)
-				fac1=0.0d0
-				fac2=0.0d0
-				do i=1,n
-					if (xw(i).eq.0.0d0) then
-						faci1=0.0d0
-						faci2=0.0d0
-						if (k+j.eq.2) faci1=1.0d0
-						if (k+j.eq.8) faci2=1.0d0
-						goto 240
-!                else
-!                   xx=abs(xw(i))
-!		    elwx1=dble(k+j-2)*log(xx)
-!		    elwx2=dble(k+j-8)*log(xx)
-					endif
-!		 if (elwx1.lt.exlim) then
-!                   faci1=0.0d0
-!		 else
-					faci1=xw(i)**(k+j-2)
-!		 endif
-!		 if (((j+k).lt.8).or.(elwx2.lt.exlim)) then
-!	            faci2=0.0d0
-!		 else
-					faci2=xw(i)**(k+j-8)
-!                endif
- 240				fac1=fac1+faci1
-					fac2=fac2+faci2
-				enddo
+	call gauss (loc,d,y,c,n)
 
-				fac = fac2*xlamb*(xk-1.0d0)*(xk-2.0d0)*(xk-3.0d0)
-				fac = fac * (xj-1.0d0)*(xj-2.0d0)*(xj-3.0d0)
+    do i=1,n
+	    y(i)=c(n)
+	    do k=n-1,1,-1
+		    y(i)=y(i)*xw(i)+c(k)
+	    enddo
+	    yw(i)=(y(i)-yb)/ya
+    enddo
 
-				fac = fac + fac1
-				d(k,j)=fac
-				d(j,k)=fac
-			enddo
-
-			y(j)=0.0d0
-
-			do i=1,n
-				if (j.eq.1) then
-					sum=yw(i)
-				else
-			 		sum=yw(i)*xw(i)**(j-1)
-				endif
-				y(j)=y(j)+sum
-				
-			enddo
-		enddo
-
-
-		call gauss (loc,d,y,c,n)
-
-		do i=1,n
-			y(i)=c(n)
-			do k=n-1,1,-1
-				y(i)=y(i)*xw(i)+c(k)
-			enddo
-			yw(i)=(y(i)-yb)/ya
-		enddo
-
-		return
-	end
+    return
+  end
 	
 !****************************************************************************
 	subroutine gauss (lval,y,f,c,n)

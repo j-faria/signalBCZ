@@ -21,11 +21,12 @@
 		! writing the final signal to SIG -
 		if (iout.eq.1) then
 		
-			write (10,*) "# with parameters"
+			write (10,*) "#"
+			write (10,*) "# with final parameters:"
 			write (10,'( x, a, x, f7.2 )') "#     taud =", c(1)/(w0*fac)
 			write (10,'( x, a, x, f7.5 )') "#     phi  =", c(2)
 			write (10,'( x, a, x, f7.5 )') "#     Ad   =", c(3)
-			
+			write (10,*) "#"
 			write (10,*) "#   v        v-vs   l  n   sig     fit"
 			write (10,*) "#------------------------------------------"
 
@@ -48,7 +49,7 @@
 			do i=1,n
 				write (10,'(f9.3,f10.6,2i3,f7.3,f10.6)') , &
                               (temp(j,i),j=1,2),l(i),int(temp(5,i)), &
-                              sig(i),temp(3,i)		
+                              temp(6,i),temp(3,i)		
      
      		end do	
 
@@ -67,17 +68,20 @@
 			call flush (3)
 		endif
 		
-		! writing the signal for this iteration ---
+		! writing the signal for this iteration to QFT file -
 		if (iout.eq.3) then
-			open (8,file='qft',status='unknown')
+			write (7,*) "#"
+			write (7,*) "#   v        v-vs   l  n   sig     fit"
+			write (7,*) "#------------------------------------------"
+			
 			do i=1,n
 				ww=w(i)
 				ll=l(i)
-				write (8,1310) w0*ww,sd(i),ll,int(xn(i)),sig(i),fun(c,ww,ll)
+				write (7,1310) w0*ww,sd(i),ll,int(xn(i)),sig(i),fun(c,ww,ll)
 			enddo
 
 
-			close (8)
+			close (7)
 		endif
 		
 	return

@@ -1,13 +1,7 @@
-!****************************************************************************
-! Mario Monteiro: Feb 2011
-! Last changed: Feb 2011
-!****************************************************************************
-	program sig_bcz
+program teste
 
-!--- File with input parameters -
-	character (len=80)   :: afilepar
- 	afilepar='sig_bcz_in.dat'
- 	call parameters (afilepar)
- 
-	end
-
+	implicit none
+	
+	call sig_bcz
+	
+end program

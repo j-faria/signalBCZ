@@ -4,7 +4,7 @@
 !		should remove INTYPE as an argument, as it is contained 
 !		in the module COMMONVAR (although it is not used here)
 !--------------------------------------------------------------------
-	subroutine output (intype,afile,c,amess)
+	subroutine output (afile,c,amess)
 !	 write the OUTPUT
 
 		use commonvar
@@ -15,49 +15,36 @@
 		character(len=80) :: afile
 		character(len=1)  :: amess
 		
-		real              :: taud
+		real            :: taud
+		real            :: chi2, chi2norm
 		
-		integer           :: nfile
-
+		integer     :: nfile
 		parameter (ncp=20)
 		dimension c(ncp)
 
+
 		taud = c(1) / (w0*fac)
+		call get_chi_square(chi2, chi2norm, c)
+		
 		write (6,*) "  Frequencies from file: ", afile
 	
-		write (6,1010) 'Results:', 'Tau_d = ', taud, &
-                               'Phi_d = ', c(2), &
-                               'A_d = ', c(3)
- 1010	format (3x, a, //, 6x, a, f9.4, 6x, a, f8.5, //, 6x, a, f10.8, /)
+		write (6,1010) 'Results:', &
+		                   'Tau_d = ', taud, 'Phi_d = ', c(2), &
+                           'A_d = ', c(3), &
+                           'chi2 = ', chi2, 'chi2norm = ', chi2norm
+ 1010	format (3x, a, //, &
+                6x, a, f9.4, 6x, a, f8.5, //, &
+                6x, a, f10.8, //, &
+                6x, a, f11.7, 5x, a, f10.7, /)
 
 
 		nfile=length(afile)
 
-	! output to "res" file -
-	
-!		if (intype.eq.0) then
-!			write (9,1015) afile(nfile-2:nfile),taud,c(2),
-!     *                    c(3),amess
-! 1015	   format (a4,'  ',f9.4,'  ',f7.5,'  ',f10.8,
-!     *             ' ',a1)
-
-!	else if (intype.eq.1) then
-!	   write (9,1016) afile(56:60),taud,c(2),
-!     *                    c(3),valtype,amess
-! 1016	   format (a4,'  ',f9.4,'  ',f7.5,'  ',f10.8,
-!     *             '  ',f6.3,' ',a1)
-
-!	else if (intype.eq.2) then
-!	   fw=(w0-wlower)/(wupper-wlower)
-!	   write (9,1017) itermod,taud,c(2),
-!     *                    c(3),xmass,w0,fw,amess
-! 1017	   format (i3,'  ',f8.3,'  ',f6.4,'  ',f8.6,
-!     *             ' ',f5.3,'  ',
-!     *             f6.1,'  ',f4.2,' ',a1)
-
-!	else 
-!	   continue
-!	endif
+		! output to "res" file -
+		if (intype.eq.0) then
+			write (9,9003) afile(nfile-6:nfile-4), taud, c(2), c(3), amess
+ 9003		format (3x, a, x, f9.4, 2x, f7.5, 2x, f10.8, 2x, a1)
+		endif
 
         return
         

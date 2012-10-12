@@ -1,0 +1,18 @@
+# Input for SIG_BCZ - for *4* parameters
+# 
+# Calculation: XINIT,FTOL,TOLFIT; DC,ITERINIT,ITERFIT
+#     0.20E-06  0.10E-06  0.10E-06
+#     0.010  3  3
+# Parameters: W0REF,XL0; XAMP0REF,TAUD0REF,PHI0REF; INTYPE; (XMASS),(XRAD)
+#     2100.0   3.0
+#     0.08  2200.0  1.00
+#     0
+#     1.0000  1.0000
+# Output: IPRINT
+#     3
+# Data: LMIN,LMAX,NLMIN,ISEL; VLEFT,VRIGTH; ISIG,SSMAX
+#     0  2  5  0
+#     0.0  0.0
+#     1  0.500
+#
+#----------------------------------------------------------

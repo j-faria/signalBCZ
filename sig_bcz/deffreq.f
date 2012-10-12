@@ -10,14 +10,9 @@
 		implicit integer (i-n)
 		
 		character(len=80)    :: afile
-		character(len=80)    :: afile0
-		
-		! need to check how to define c when it is an argument 
-		! of the function
-		
+		character(len=80)    :: afile0	
 		integer, parameter   :: ncp = 20
-		!real, dimension(ncp) :: c
-		dimension c(ncp)
+		double precision, dimension(*), intent(inout) :: c
 
 		w0 = w0ref
 		tau0 = tau0ref
@@ -25,8 +20,7 @@
 		! first 2 parameters
 		c(1)=tau0*w0*fac	! argument
 		c(2)=phi0ref		! phase
-
-		xamp0=xamp0ref
+		
 		! third parameter
 		c(3)=xamp0		! amplitude
 
@@ -42,9 +36,9 @@
 		write(*,*) ' '
 		
 		if (include_errors == 'yes' .or. include_errors == 'y') then
-			write (*,*) " name of input file (l,n,v,sigma)  --> "
+			write (*,'(2x, a)', advance = "no") "name of input file (l,n,v,sigma) --> "
 		else if (include_errors == 'no' .or. include_errors == 'n') then
-			write (*,*) " name of input file (l,n,v)  --> "
+			write (*,'(2x, a)', advance = "no") "name of input file (l,n,v) --> "
 		endif
 
 		read (*,'(a80)') afile
