@@ -30,8 +30,9 @@
 	
 		write (6,1010) 'Results:', &
 		                   'Tau_d = ', taud, 'Phi_d = ', c(2), &
-                           'A_d = ', c(3), &
+                           'A_d = ', c(3) / 1.d6, & ! need to check why we do this conversion!!!!!!
                            'chi2 = ', chi2, 'chi2norm = ', chi2norm
+        write(6,*) c(3)
  1010	format (3x, a, //, &
                 6x, a, f9.4, 6x, a, f8.5, //, &
                 6x, a, f10.8, //, &

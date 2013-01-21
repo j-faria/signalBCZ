@@ -29,7 +29,7 @@
         ww = w(i)
         ll = l(i)
         signal_err = (w0*ww + sig(i)) - (w0*ww - sd(i))
-        fit = fun(c,ww,ll)
+        fit = fun2(c,ww,ll)
         chi2term = ((sd(i) - sngl(fit)) / signal_err)**2
 	    chi2sum = chi2sum + chi2term
 	    chi2N = chi2N + 1

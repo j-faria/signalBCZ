@@ -36,7 +36,7 @@
 				ll = l(i)
 				temp(1,i) = w0*ww
 				temp(2,i) = sd(i)
-				temp(3,i) = fun(c,ww,ll)
+				temp(3,i) = fun2(c,ww,ll)
 				temp(4,i) = ll
 				temp(5,i) = xn(i)
 				temp(6,i) = sig(i)
@@ -77,7 +77,7 @@
 			do i=1,n
 				ww=w(i)
 				ll=l(i)
-				write (7,1310) w0*ww,sd(i),ll,int(xn(i)),sig(i),fun(c,ww,ll)
+				write (7,1310) w0*ww,sd(i),ll,int(xn(i)),sig(i),fun2(c,ww,ll)
 			enddo
 
 
