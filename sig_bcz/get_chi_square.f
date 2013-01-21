@@ -37,7 +37,7 @@
 	
 	chi2 = chi2sum
 	! normalized chi^2:
-	chi2norm = chi2sum / chi2N
+	chi2norm = chi2sum / (chi2N - nconst)
 	
 	return
 	

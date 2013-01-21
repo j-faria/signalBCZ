@@ -35,7 +35,7 @@
  1010	format (3x, a, //, &
                 6x, a, f9.4, 6x, a, f8.5, //, &
                 6x, a, f10.8, //, &
-                6x, a, f11.7, 5x, a, f10.7, /)
+                6x, a, f15.3, 5x, a, f15.3, /)
 
 
 		nfile=length(afile)

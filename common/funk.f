@@ -3,7 +3,7 @@
 !	 the function to be minimized is defined as the residuals for
 !	 a fit in a least squares sense
 
-		use commonvar, only : nconst, include_errors
+		use commonvar, only : nconst, use_error_chi2
 		! contains npt, n, l, sd, sig, xn, w -
 		use commonarray
 		
@@ -15,7 +15,7 @@
 		
 		resid = 0.0d0
 		! if not using errors -
-		if (include_errors == 'no' .or. include_errors == 'n') then
+		if (use_error_chi2 == 'no' .or. use_error_chi2 == 'n') then
 			do i=1,n
 				ww = w(i)
 				ll = l(i)
@@ -23,7 +23,7 @@
 				resid = resid + (sd(i)-sf)**2
 			end do
 		! if using errors -
-		else if (include_errors == 'yes' .or. include_errors == 'y') then
+		else if (use_error_chi2 == 'yes' .or. use_error_chi2 == 'y') then
 			do i=1,n
 				ww = w(i)
 				ll = l(i)

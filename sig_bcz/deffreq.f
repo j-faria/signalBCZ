@@ -35,9 +35,9 @@
 		
 		write(*,*) ' '
 		
-		if (include_errors == 'yes' .or. include_errors == 'y') then
+		if (use_error_chi2 == 'yes' .or. use_error_chi2 == 'y') then
 			write (*,'(2x, a)', advance = "no") "name of input file (l,n,v,sigma) --> "
-		else if (include_errors == 'no' .or. include_errors == 'n') then
+		else if (use_error_chi2 == 'no' .or. use_error_chi2 == 'n') then
 			write (*,'(2x, a)', advance = "no") "name of input file (l,n,v) --> "
 		endif
 

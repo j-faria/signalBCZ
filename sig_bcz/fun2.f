@@ -1,5 +1,5 @@
 !**********************************************************
-  real(kind=8) function fun (c, w, l)
+  real function fun2 (c, w, l)
 !	 this is the function to be fitted. It is the signal
 !	 produced by the sharp transition in the base of the
 !	 convection zone
@@ -8,17 +8,17 @@
 
 		implicit none
 	
-		double precision, intent(in)  :: c(*)
-		double precision, intent(in)  :: w
+		real, intent(in)  :: c(*)
+		real, intent(in)  :: w
 		integer, intent(in)           :: l
 
-		double precision :: xarg
+		real :: xarg
 
 		
 		xarg = 2.0d0 * ( c(1)*w + c(2) )
-	  	fun  = ( c(3)/w**2 ) * sin(xarg)
+	  	fun2  = ( c(3)/w**2 ) * sin(xarg)
 
 		return
 		
-  end function fun
+  end function fun2
 

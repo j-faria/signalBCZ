@@ -9,6 +9,8 @@
 !	 in C and the residuals in RESD
 
 		use commonvar, only : nconst, iprint, iterinit,iterfit,ftol,tolfit
+		use commonarray, only : n
+		use interfaces
 		
 		implicit double precision (b-h,o-z)
 		implicit integer (i-n)
@@ -18,7 +20,7 @@
 
 		
 		integer, parameter               :: ncp = 20
-		integer, parameter               :: imax = 1000
+		integer, parameter               :: imax = 5000
 		integer, parameter               :: npt = 2000
 		real, parameter                  :: tiny = 1.0d0
 		
@@ -26,7 +28,11 @@
 		integer                          :: iter	! iteration number
 
 		real, dimension(ncp)             :: c0
-		double precision, intent(inout)  :: c(*)
+		real(kind=8), intent(inout)  :: c(*)
+		real, dimension(nconst)  :: xin
+		real(kind=8)            :: resd
+		
+		external resid
 
 
 		if (iprint.ge.1) call writeout (2,c)
@@ -59,13 +65,17 @@
 
 			! find the parameters that minimize the residuals
 			call fit (c,resd,ierrorflag)
+!            xin = real(c(1:nconst))
+!            call minimize(n, nconst, xin, resid, resd)
+!            ierrorflag = 0
 
-			!** PRINT **
+
+			!** PRINT ******
 			if (iprint.ge.1) then
 				call writeout (2,c)
 				if (iprint.ge.4) call writeout (3,c)
 			endif
-			!***********
+			!***************
 			
 			rtol = 0.0d0
 
@@ -73,7 +83,7 @@
 				rtol = rtol+abs((c(j)-c0(j)))/max(tiny,abs(c(j)+c0(j)))
 			end do
 
-			!** PRINT **
+			!** PRINT ******
 			if (iprint.ge.2) then
 				! if error in AMOEBA -
 				if (ierrorflag.eq.1) then
@@ -87,7 +97,7 @@
 				              iter, "->", xlamb*1.0d7, rtol, resd, aerror
 				call flush (6)
 			endif
-			!***********
+			!***************
 
 			if (abs((resd-resd0)/(resd+resd0)).lt.1.0d-12) then
 				rtol=ftol
@@ -96,8 +106,8 @@
 			endif
 	   
 			if (rtol.gt.ftol) then
+				! no convergence in IMAX iterations -
 				if (iterloc.gt.imax) then
-					! no convergence in IMAX iterations -
 					write (6,'( a,a,/ )') "  ==> WARNING: No convergency for ", &
                            "max. iter. in FITLAMB !"
 					amess='!'

@@ -59,7 +59,7 @@
     !		 else
 			    faci2=xw(i)**(k+j-8)
     !                endif
-    240				fac1=fac1+faci1
+    240			fac1=fac1+faci1
 			    fac2=fac2+faci2
 		    enddo
 
@@ -73,8 +73,9 @@
 
 	    y(j)=0.0d0
 
+        ! construct (n-1) degree polynomial
 	    do i=1,n
-		    if (j.eq.1) then
+		    if (j.eq.1) then    ! constant term
 			    sum=yw(i)
 		    else
 	     		sum=yw(i)*xw(i)**(j-1)
@@ -87,6 +88,7 @@
 
 	call gauss (loc,d,y,c,n)
 
+    ! de-normalization
     do i=1,n
 	    y(i)=c(n)
 	    do k=n-1,1,-1

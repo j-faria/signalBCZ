@@ -36,7 +36,7 @@
 		! minimum number of modes with same degree -
 		integer  :: nlmind
 		! wether it should use the errors or not -
-		character(len=10) :: include_errorsd
+		character(len=10) :: include_errorsd, use_error_chi2d
 		integer  :: isigd
 		! upper limit for error -
 		real     :: ssmaxd
@@ -50,7 +50,7 @@
              iprintd,&
              vrigthd,vleftd,&
              nlmind,&
-             isigd, include_errorsd, &
+             isigd, include_errorsd, use_error_chi2d, &
              ssmaxd,&
              lmind,lmaxd
      
@@ -80,8 +80,8 @@
 			write (6,'( a,/ )') "  Input parameters are:"
 			write (6, 6001) xinitd, xamp0d, tau0refd, phi0refd, iprintd, include_errorsd
  6001		format(4x, "XINIT = ", es10.4, /, &
-                      4x, "AMP0 = ", f5.3, 4x, "TAU0 = ", f9.2, 4x, "PHI0 = ", f5.3, /, &
-                      4x, "IPRINT = ", i1, 4x, "ERRORS = ", a1, / )
+                   4x, "AMP0 = ", f5.3, 4x, "TAU0 = ", f9.2, 4x, "PHI0 = ", f5.3, /, &
+                   4x, "IPRINT = ", i1, 4x, "ERRORS = ", a1, / )
 		end if
 		
 !		write(6,'( a,/ )') "  Input parameters are:"
@@ -147,6 +147,7 @@
 		endif
 		  
 		include_errors = include_errorsd 
+		use_error_chi2 = use_error_chi2d
 		isig = isigd
 		ssmax = ssmaxd
 

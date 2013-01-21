@@ -1,4 +1,4 @@
-GFORTRAN module version '6' created from /home/joao/Programs/CODE_freqFit/sig_bcz/commonarray.f on Tue Aug 21 12:49:55 2012
+GFORTRAN module version '6' created from /home/joao/Programs/CODE_freqFit/sig_bcz/commonarray.f on Thu Nov 29 16:51:46 2012
 MD5:3c8ae7e46b48d364547f9f1062576513 -- If you edit this, you'll get what you deserve.
 
 (() () () () () () () () () () () () () () () () () () () () () () () ()

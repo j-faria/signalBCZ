@@ -8,14 +8,14 @@ module commonvar
 	
 	implicit none
 	
-	character(len=10), public  :: include_errors
+	character(len=10), public  :: include_errors, use_error_chi2
 	
 	integer, public      :: nconst			! number of parameters to fit
 	integer, public      :: iprint
 	integer, public      :: intype			! type of frequency input
 	integer, public      :: lmin, lmax, nlmin	! lmin - min degree l to consider
-										! lmax - max degree l to consider
-										! nlmin - min # of l points
+												! lmax - max degree l to consider
+												! nlmin - min # of l points
 	integer, public      :: iterinit,iterfit
 	integer, public      :: itermod
 	integer, public      :: isig, isel
