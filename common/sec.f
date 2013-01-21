@@ -30,7 +30,7 @@
 				ww = w(i)
 				ll = l(i)
 				x(i+1-ni) = xn(i)
-				y(i+1-ni) = w0*w(i) - fun(c,ww,ll)
+				y(i+1-ni) = w0*w(i) - fun2(c,ww,ll)
 			end do
 
 

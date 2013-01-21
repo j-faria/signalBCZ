@@ -19,7 +19,7 @@
 			do i=1,n
 				ww = w(i)
 				ll = l(i)
-				sf = fun(c,ww,ll)
+				sf = fun2(c,ww,ll)
 				resid = resid + (sd(i)-sf)**2
 			end do
 		! if using errors -
@@ -27,7 +27,7 @@
 			do i=1,n
 				ww = w(i)
 				ll = l(i)
-				sf = fun(c,ww,ll)
+				sf = fun2(c,ww,ll)
 				resid = resid + ((sd(i)-sf)/sig(i))**2
 			end do
 

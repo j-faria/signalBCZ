@@ -60,18 +60,20 @@ $(JF)/parameters.o \
 $(JF)/openfiles.o \
 $(JF)/output.o \
 $(JF)/writeout2.o \
-$(JF)/fun.o \
 $(JF)/fun2.o 
+#$(JF)/fun2.o
+
 
 FCOM = \
-   $(JFA)/minimize.o \
-   $(JFA)/nl2sol.o \
-   $(JFA)/resid.o \
-   $(JFA)/fit.o \
-   $(JFA)/init.o \
-   $(JFA)/fitlamb.o \
-   $(JFA)/sec.o \
-   $(JFA)/funk.o
+$(JFA)/fit.o \
+$(JFA)/init.o \
+$(JFA)/fitlamb.o \
+$(JFA)/sec.o \
+$(JFA)/funk.o
+
+# $(JFA)/minimize.o \
+# $(JFA)/nl2sol.o \
+# $(JFA)/resid.o\
 
 FBASIC = \
 $(JFB)/amoeba/amoeba.o \
