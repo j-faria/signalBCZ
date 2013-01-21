@@ -8,11 +8,11 @@
 
 		implicit none
 	
-		double precision, intent(in)  :: c(*)
-		double precision, intent(in)  :: w
+		real(kind=8), intent(in)  :: c(*)
+		real(kind=8), intent(in)  :: w
 		integer, intent(in)           :: l
 
-		double precision :: xarg
+		real(kind=8) :: xarg
 
 		
 		xarg = 2.0d0 * ( c(1)*w + c(2) )
